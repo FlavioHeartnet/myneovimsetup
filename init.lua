@@ -258,7 +258,16 @@ sidebar_filetypes = {
     NvimTree = true,
   },
 }
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
 
+-- Move to previous/next
+map('n', '<s-tab>', '<Cmd>BufferPrevious<CR>', opts)
+map('n', '<tab>', '<Cmd>BufferNext<CR>', opts)
+-- Pin/unpin buffer
+map('n', '<s-p>', '<Cmd>BufferPin<CR>', opts)
+-- Close buffer
+map('n', '<s-q>', '<Cmd>BufferClose<CR>', opts)
 --init TermToggle
 require('toggleterm').setup{}
 vim.keymap.set('n', '<leader>th', '<Cmd>:ToggleTerm direction=horizontal<CR>')
