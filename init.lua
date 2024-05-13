@@ -313,7 +313,8 @@ vim.o.mouse = 'a'
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
-
+vim.keymap.set('n', '<C-c>', '"+y', {desc = '[c] copy to system clipboard'})
+vim.keymap.set('v', '<C-c>', '"+y', {desc = '[c] copy to system clipboard visual mode'})
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -327,7 +328,7 @@ vim.o.smartcase = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
--- Decrease update time
+-- Decrease update time'
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
