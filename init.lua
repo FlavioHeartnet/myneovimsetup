@@ -396,7 +396,7 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
-require('nvim-treesitter.configs').setup {
+require('nvim-treesitter.config').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'html', 'svelte', 'dart', 'yaml', 'fennel', 'clojure', 'css', 'markdown' },
 
@@ -549,16 +549,22 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end
-}
+
+require("mason-lspconfig").setup({
+  handlers = {
+    -- The first entry (without a key) is the default handler
+    function(server_name)
+      require('lspconfig')[server_name].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = servers[server_name],
+        filetypes = (servers[server_name] or {}).filetypes,
+      })
+    end,
+    -- Next, you can add specific overrides if needed:
+    -- ["lua_ls"] = function() ... end,
+  }
+})
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
